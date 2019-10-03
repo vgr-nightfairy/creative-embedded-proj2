@@ -49,7 +49,14 @@
 */
 
 // ledPin refers to ESP32 GPIO 23
-const int ledPin = 23;
+const int ledPin1 = 23;
+const int ledPin2 = 21;
+const int ledPin3 = 19;
+const int ledPin4 = 18;
+const int ledPin5 = 17;
+const int ledPin6 = 16;
+const int ledPin7 = 4;
+const int ledPin8 = 15;
 const int Button = 22;
 const int Xaxis = 34;
 const int Yaxis = 35;
@@ -62,7 +69,14 @@ int YRead = 0;
 void setup() {
   // initialize digital pin ledPin as an output.
   Serial.begin(9600);
-  pinMode(ledPin, OUTPUT);
+  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin2, OUTPUT);
+  pinMode(ledPin3, OUTPUT);
+  pinMode(ledPin4, OUTPUT);
+  pinMode(ledPin5, OUTPUT);
+  pinMode(ledPin6, OUTPUT);
+  pinMode(ledPin7, OUTPUT);
+  pinMode(ledPin8, OUTPUT);
   pinMode(Button, INPUT_PULLUP);
   pinMode(Xaxis, INPUT);
   pinMode(Yaxis, INPUT);
@@ -78,11 +92,26 @@ void loop() {
   Serial.println(String(YRead));
   
   if (ButtonRead == 0){
-    digitalWrite(ledPin, HIGH);   // turn the LED on (HIGH is the voltage level)
+    digitalWrite(ledPin1, HIGH);   // turn the LED on (HIGH is the voltage level)
+    digitalWrite(ledPin2, HIGH);
+    digitalWrite(ledPin3, HIGH);
+    digitalWrite(ledPin4, HIGH);
+    digitalWrite(ledPin5, HIGH);
+    digitalWrite(ledPin6, HIGH);
+    digitalWrite(ledPin7, HIGH);
+    digitalWrite(ledPin8, HIGH);
     delay(500);
   }
   else {
-    digitalWrite(ledPin, LOW);    // turn the LED off by making the voltage LOW
+    digitalWrite(ledPin1, LOW);    // turn the LED off by making the voltage LOW
+    digitalWrite(ledPin2, LOW);
+    digitalWrite(ledPin3, LOW);
+    digitalWrite(ledPin4, LOW);
+    digitalWrite(ledPin5, LOW);
+    digitalWrite(ledPin6, LOW);
+    digitalWrite(ledPin7, LOW);
+    digitalWrite(ledPin8, LOW);
     delay(500);
   }
 } 
+
