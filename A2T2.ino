@@ -43,23 +43,18 @@
 ////  delay(1000);
 ////  digitalWrite (LED, LOW);  
 //}
+const int ledPin[] = {23, 21, 19, 18, 17, 16, 4, 15};
 
-/*
-  Blink
-*/
-
-// ledPin refers to ESP32 GPIO 23
-const int ledPin1 = 23;
-const int ledPin2 = 21;
-const int ledPin3 = 19;
-const int ledPin4 = 18;
-const int ledPin5 = 17;
-const int ledPin6 = 16;
-const int ledPin7 = 4;
-const int ledPin8 = 15;
 const int Button = 22;
+
 const int Xaxis = 34;
 const int Yaxis = 35;
+const int coordX = 0;
+const int coordY = 0;
+const int ctrX = 1840;
+const int ctrY = 1806;
+const int curr = 0;
+const int prev = 0;
 
 int ButtonRead = 0;
 int XRead = 0;
@@ -69,18 +64,63 @@ int YRead = 0;
 void setup() {
   // initialize digital pin ledPin as an output.
   Serial.begin(9600);
-  pinMode(ledPin1, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
-  pinMode(ledPin3, OUTPUT);
-  pinMode(ledPin4, OUTPUT);
-  pinMode(ledPin5, OUTPUT);
-  pinMode(ledPin6, OUTPUT);
-  pinMode(ledPin7, OUTPUT);
-  pinMode(ledPin8, OUTPUT);
+  for (int i = 0; i < 8; i ++) {
+    pinMode(ledPin[i], OUTPUT);
+  }
+  
   pinMode(Button, INPUT_PULLUP);
+  
   pinMode(Xaxis, INPUT);
   pinMode(Yaxis, INPUT);
+
+} 
+
+int slope(int x1, int y1, int x2, int y2)
+{
+  return ((y1-y2) / (x1-x2));
 }
+
+int currLocation (int x, int y, int cx, int cy) 
+{
+  int currSlope = slope(x,y, cx,cy); 
+
+  if (x > cx)
+  {
+    if (y > cy) 
+    {
+      if (currSlope > 1) 
+        return 0;
+      else
+        return 1;    
+    }
+    else 
+    {
+      if (currSlope > -1)
+        return 2;
+      else
+        return 3;
+    }
+  }
+
+  else
+  {
+    if (y < cy) 
+    {
+      if (currSlope > 1)
+        return 4;
+      else
+        return 5;
+    }
+    else 
+    {
+      if (currSlope > -1)
+        return 6;
+      else
+        return 7;
+    }
+  }
+}
+
 
 // the loop function runs over and over again forever
 void loop() {
@@ -92,26 +132,15 @@ void loop() {
   Serial.println(String(YRead));
   
   if (ButtonRead == 0){
-    digitalWrite(ledPin1, HIGH);   // turn the LED on (HIGH is the voltage level)
-    digitalWrite(ledPin2, HIGH);
-    digitalWrite(ledPin3, HIGH);
-    digitalWrite(ledPin4, HIGH);
-    digitalWrite(ledPin5, HIGH);
-    digitalWrite(ledPin6, HIGH);
-    digitalWrite(ledPin7, HIGH);
-    digitalWrite(ledPin8, HIGH);
+    for (int i = 0; i < 8; i ++) {
+      digitalWrite(ledPin[i], HIGH);
+    }
     delay(500);
   }
   else {
-    digitalWrite(ledPin1, LOW);    // turn the LED off by making the voltage LOW
-    digitalWrite(ledPin2, LOW);
-    digitalWrite(ledPin3, LOW);
-    digitalWrite(ledPin4, LOW);
-    digitalWrite(ledPin5, LOW);
-    digitalWrite(ledPin6, LOW);
-    digitalWrite(ledPin7, LOW);
-    digitalWrite(ledPin8, LOW);
+    for (int i = 0; i < 8; i ++) {
+      digitalWrite(ledPin[i], LOW);
+    }
     delay(500);
   }
 } 
-
