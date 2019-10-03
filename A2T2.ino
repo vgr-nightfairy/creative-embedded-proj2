@@ -49,12 +49,13 @@ const int Button = 22;
 
 const int Xaxis = 34;
 const int Yaxis = 35;
-const int coordX = 0;
-const int coordY = 0;
-const int ctrX = 1840;
-const int ctrY = 1806;
-const int curr = 0;
-const int prev = 0;
+
+//int coordX = 0;
+//int coordY = 0;
+//const int ctrX = 1840;
+//const int ctrY = 1806;
+int curr = 0;
+int prev = 0;
 
 int ButtonRead = 0;
 int XRead = 0;
@@ -74,73 +75,131 @@ void setup() {
   pinMode(Yaxis, INPUT);
 
 } 
-
-int slope(int x1, int y1, int x2, int y2)
-{
-  return ((y1-y2) / (x1-x2));
-}
-
-int currLocation (int x, int y, int cx, int cy) 
-{
-  int currSlope = slope(x,y, cx,cy); 
-
-  if (x > cx)
-  {
-    if (y > cy) 
-    {
-      if (currSlope > 1) 
-        return 0;
-      else
-        return 1;    
-    }
-    else 
-    {
-      if (currSlope > -1)
-        return 2;
-      else
-        return 3;
-    }
-  }
-
-  else
-  {
-    if (y < cy) 
-    {
-      if (currSlope > 1)
-        return 4;
-      else
-        return 5;
-    }
-    else 
-    {
-      if (currSlope > -1)
-        return 6;
-      else
-        return 7;
-    }
-  }
-}
+//
+//int slope(int x1, int y1, int x2, int y2)
+//{
+//  return ((y1-y2) / (x1-x2));
+//}
+//
+//int currLocation (int x, int y, int cx, int cy) 
+//{
+//  int currSlope = slope(x, y, cx, cy); 
+//
+//  if (x > cx)
+//  {
+//    if (y > cy) 
+//    {
+//      if (currSlope > 1) 
+//        return 0;
+//      else
+//        return 1;    
+//    }
+//    else 
+//    {
+//      if (currSlope > -1)
+//        return 2;
+//      else
+//        return 3;
+//    }
+//  }
+//
+//  else
+//  {
+//    if (y < cy) 
+//    {
+//      if (currSlope > 1)
+//        return 4;
+//      else
+//        return 5;
+//    }
+//    else 
+//    {
+//      if (currSlope > -1)
+//        return 6;
+//      else
+//        return 7;
+//    }
+//  }
+//}
 
 
 // the loop function runs over and over again forever
 void loop() {
   ButtonRead = digitalRead(Button);
+  
   XRead = analogRead(Xaxis);
   YRead = analogRead(Yaxis);
-  Serial.println(String(ButtonRead));
-  Serial.println(String(XRead));
-  Serial.println(String(YRead));
-  
-  if (ButtonRead == 0){
-    for (int i = 0; i < 8; i ++) {
-      digitalWrite(ledPin[i], HIGH);
-    }
-    delay(500);
+
+  double rad = atan2(YRead - 1807, XRead - 1840);
+
+  double deg = rad * 57.295779513082320876798154814105;
+
+//  curr = currLocation(XRead, YRead, ctrX, ctrY);
+
+//  digitalWrite(ledPin[curr], HIGH);
+//  if (curr != prev) {
+//    digitalWrite(ledPin[prev], LOW);
+//  }
+//
+//  prev = curr;
+
+  if (XRead > 1800 && XRead < 1900 && YRead > 1750 && YRead < 1850) {
+    curr = 16;
   }
-  else {
+  else if (deg < -45.00 && deg > -90.00) {
+    curr = 0;
+  }
+  else if (deg < 0.00 && deg >= -45.00) {
+    curr = 1;
+  }
+  else if (deg >= 0.00 && deg < 45.00) {
+    curr = 2;
+  }
+  else if (deg >= 45.00 && deg < 90.00) {
+    curr = 3;
+  }
+  else if (deg >= 90.00 && deg < 135.00) {
+    curr = 4;
+  }
+  else if (deg >= 135.00 && deg <= 180.00) {
+    curr = 5;
+  }
+  else if (deg >= -180.00 && deg < -135.00) {
+    curr = 6;
+  }
+  else if (deg >= -135.00 && deg <= -90.00) {
+    curr = 7; 
+  }
+
+  if (curr == 16) {
     for (int i = 0; i < 8; i ++) {
       digitalWrite(ledPin[i], LOW);
     }
-    delay(500);
   }
+  else {
+    digitalWrite(ledPin[curr], HIGH);
+    if (curr != prev) {
+      digitalWrite(ledPin[prev], LOW);
+    }
+  }
+
+  prev = curr;
+
+  Serial.println(String(ButtonRead));
+  Serial.println(String(XRead));
+  Serial.println(String(YRead));
+  Serial.println("Angle" + String(deg));
+  
+//  if (ButtonRead == 0){
+//    for (int i = 0; i < 8; i ++) {
+//      digitalWrite(ledPin[i], HIGH);
+//    }
+//    delay(500);
+//  }
+//  else {
+//    for (int i = 0; i < 8; i ++) {
+//      digitalWrite(ledPin[i], LOW);
+//    }
+//    delay(500);
+//  }
 } 
