@@ -50,22 +50,34 @@
 
 // ledPin refers to ESP32 GPIO 23
 const int ledPin = 23;
-const int Button = 13;
+const int Button = 22;
+const int Xaxis = 34;
+const int Yaxis = 35;
 
 int ButtonRead = 0;
+int XRead = 0;
+int YRead = 0;
+
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin ledPin as an output.
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
-  pinMode(Button, INPUT);
+  pinMode(Button, INPUT_PULLUP);
+  pinMode(Xaxis, INPUT);
+  pinMode(Yaxis, INPUT);
 }
 
 // the loop function runs over and over again forever
 void loop() {
   ButtonRead = digitalRead(Button);
+  XRead = analogRead(Xaxis);
+  YRead = analogRead(Yaxis);
   Serial.println(String(ButtonRead));
-  if (ButtonRead == 1){
+  Serial.println(String(XRead));
+  Serial.println(String(YRead));
+  
+  if (ButtonRead == 0){
     digitalWrite(ledPin, HIGH);   // turn the LED on (HIGH is the voltage level)
     delay(500);
   }
