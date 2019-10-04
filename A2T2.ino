@@ -41,6 +41,10 @@ void loop() {
 
   double deg = rad * 57.295779513082320876798154814105;
 
+  if (ButtonRead == 0) {
+    while(1);
+  }
+
   
   if (XRead > 1800 && XRead < 1900 && YRead > 1750 && YRead < 1850) {
     curr = 16;
