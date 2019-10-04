@@ -1,1 +1,3 @@
 # creative-embedded-proj2
+
+For this task, I really cared about trying to enclose the ESP32 into a nature-like exhibit because I thought it'd be interesting to merge the two. Therefore my project is all about manipulating light in nature. I solely relied on the ESP32 for this task because the only output I cared to have was light. This project has three inputs (a switch, a joystick, and a button). There are 16 LEDs. The joystick allows the user to manuever around the flower one by one through each LED (as each LED represents a petal). The switch allows all the LEDs to blink together in a synchronzied fashion. Finally the button is the abort order, and it will stop the program.
