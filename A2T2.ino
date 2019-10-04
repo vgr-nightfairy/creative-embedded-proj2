@@ -7,10 +7,6 @@ const int Switch = 5;
 const int Xaxis = 34;
 const int Yaxis = 35;
 
-//int coordX = 0;
-//int coordY = 0;
-//const int ctrX = 1840;
-//const int ctrY = 1806;
 int curr = 0;
 int prev = 0;
 
@@ -21,7 +17,6 @@ int SwitchRead = 0;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize digital pin ledPin as an output.
   Serial.begin(9600);
   for (int i = 0; i < 16; i ++) {
     pinMode(ledPin[i], OUTPUT);
@@ -33,8 +28,6 @@ void setup() {
   pinMode(Yaxis, INPUT);
 
 } 
-
-
 
 // the loop function runs over and over again forever
 void loop() {
